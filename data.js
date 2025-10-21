@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('searchInput');
   let lawyers = [];
 
-  // 🔗 Fetch data from Google Sheets
-  fetch("https://script.google.com/macros/s/AKfycbwfiyltx9zHASvcyGlEeNHEKzil9j9GIAWUI3Z63qrY14fEoBj_m8tsNXELh2W_xrYu/exec") // <-- paste your own Web App URL here
+  
+  fetch("https://script.google.com/macros/s/AKfycbwuJ4yEYh2W6KPEIR3DP9qU7iT0vy2DdV8r-nGQ8Db5y6958XbMJnLY7kG2bUjH9dUB/exec") // <-- paste your own Web App URL here
     .then(res => res.json())
     .then(data => {
       lawyers = data;
@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 🔍 Search
   searchInput.addEventListener('input', () => {
     const searchTerm = searchInput.value.toLowerCase().trim();
     const filtered = lawyers.filter(l =>
