@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let lawyers = [];
 
   
-  fetch("https://script.google.com/macros/s/AKfycbwuJ4yEYh2W6KPEIR3DP9qU7iT0vy2DdV8r-nGQ8Db5y6958XbMJnLY7kG2bUjH9dUB/exec") // <-- paste your own Web App URL here
+  fetch("https://script.google.com/macros/s/AKfycbz4oUPsn1gp6yJ0VIfL9slR2bgewTtuC_0PnXJyTfKd_1UT0CN5-9rYiX5zqsR3T9g/exec") // <-- paste your own Web App URL here
     .then(res => res.json())
     .then(data => {
       lawyers = data;
