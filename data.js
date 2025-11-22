@@ -3,11 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('searchInput');
   let lawyers = [];
 
-  
-  fetch("https://script.google.com/macros/s/AKfycbz4oUPsn1gp6yJ0VIfL9slR2bgewTtuC_0PnXJyTfKd_1UT0CN5-9rYiX5zqsR3T9g/exec") // <-- paste your own Web App URL here
+  // Fetch data from Google Sheets Web App
+  fetch("https://script.google.com/macros/s/AKfycbwGAPK6kVr3y6KGAGLPYIf1zbYZwR08vcLVg7fk06wIoFn0969N15GVGsjE0D6LC1Q/exec")
     .then(res => res.json())
     .then(data => {
       lawyers = data;
+
+      // Sort New → Old based on enrolment year
+      lawyers.sort((a, b) => {
+        const yearA = parseInt(a.Enrolment?.match(/\d{4}$/)?.[0] || 0);
+        const yearB = parseInt(b.Enrolment?.match(/\d{4}$/)?.[0] || 0);
+        return yearB - yearA; // New → Old
+      });
+
       displayLawyers(lawyers);
     })
     .catch(err => {
@@ -15,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
       lawyerGrid.innerHTML = "<p style='text-align:center;'>Failed to load data.</p>";
     });
 
+  // Function to display lawyers
   function displayLawyers(list) {
     lawyerGrid.innerHTML = '';
     if (list.length === 0) {
@@ -39,13 +48,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Search filter with New → Old sorting
   searchInput.addEventListener('input', () => {
     const searchTerm = searchInput.value.toLowerCase().trim();
-    const filtered = lawyers.filter(l =>
+    let filtered = lawyers.filter(l =>
       l.Name.toLowerCase().includes(searchTerm) ||
       l.Specialty.toLowerCase().includes(searchTerm) ||
       l.Enrolment.toLowerCase().includes(searchTerm)
     );
+
+    // Sort filtered list New → Old
+    filtered.sort((a, b) => {
+      const yearA = parseInt(a.Enrolment?.match(/\d{4}$/)?.[0] || 0);
+      const yearB = parseInt(b.Enrolment?.match(/\d{4}$/)?.[0] || 0);
+      return yearB - yearA;
+    });
+
     displayLawyers(filtered);
   });
 });
